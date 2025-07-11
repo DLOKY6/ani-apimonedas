@@ -1,0 +1,11 @@
+apiVersion: app/v1
+kind: Service
+metadata: 
+  name: bdmonedas-servicios
+spec:
+  selector:
+    app: bdmonedas
+  ports:
+    - port: 5432
+      targetPort: 5433
+  type: ClusterIP
