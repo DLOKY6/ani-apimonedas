@@ -1,7 +1,7 @@
 apiVersion: app/v1
 kind: Service
 metadata: 
-  name: bdmonedas-servicios
+  name: bdmonedas-servicio
 spec:
   selector:
     app: bdmonedas

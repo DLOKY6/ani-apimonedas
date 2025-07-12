@@ -3,7 +3,7 @@ kind: StateFulSet
 metadata: 
   name: bdmonedas-sfs
 spec:
-  serviceName: "bdmonedas servicios"
+  serviceName: "bdmonedas servicio"
   replicas: 1
   selector: 
     matchLabels: 
