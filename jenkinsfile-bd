@@ -1,42 +1,44 @@
 pipeline {
-        agent any
+    agent any
 
-        environment {
-                KUBECONFIG = credentials('300')
-        }
+    environment {
+        KUBECONFIG = credentials('300')
+    }
 
     stages {
-        stage: ('Limpiar datos previos'){ 
-            steps:{
+        stage('Limpiar datos previos') {
+            steps {
                 script {
                     bat """
-                        kubectl delete statefulset bdmonedas-sfs --ignore-not-found
-                        kubectl delete pvc storage-bdmonedas-bdmonedas-sfs-0 --ignore-not-found
+                    kubectl delete statefulset bdmonedas-sfs --ignore-not-found
+                    kubectl delete pvc storage-bdmonedas-bdmonedas-sfs-0 --ignore-not-found
                     """
                 }
             }
         }
-        stage: ('Aplicar manifestacion Infraestructura'){
-            steps: {
-                script {
-                    bat """
+
+        stage('Aplicar Manifiestos Infraestructura') {
+                steps {
+                    script {
+                        bat """
                         kubectl apply -f _manifiestos\\infraestructura\\
-                    """
+                        """
+                    }
                 }
             }
-        } 
-    
-    
-        stage: ('Esperar Pod listo'){
-            steps: {
-                script {
-                    bat """
-                        kubectl rollout status statesfulset/bdmonedas-sfs
-                    """
+
+        stage('Esperar Pod listo') {
+                steps {
+                    script {
+                        bat """
+                        kubectl rollout status statefulset/bdmonedas-sfs
+                        """
+                    }
                 }
             }
-        } 
+
     }
+
     post {
         success {
             echo 'Infraestructura desplegada correctamente!'
